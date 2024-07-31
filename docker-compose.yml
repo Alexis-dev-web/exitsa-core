@@ -1,0 +1,56 @@
+services:
+  exitosa-core:
+    build:
+      dockerfile: Dockerfile
+    volumes:
+      - static_volume:/usr/src/app/static
+      - ./:/usr/src/app
+    ports:
+      - 8000:8000
+    env_file:
+      - ./.env
+    depends_on:
+      - db
+    networks:
+      - app-tier
+  db:
+    image: postgres:16.3-alpine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=exitosa
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=1234@admin
+    ports:
+      - 5432:5432
+    networks:
+      - app-tier
+  manage-database:
+    image: dpage/pgadmin4
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@exitosa.com
+      - PGADMIN_DEFAULT_PASSWORD=admin1234
+    ports:
+      - "16543:80"
+    depends_on:
+      - db
+    networks:
+      - app-tier
+  web:
+    build: ./nginx
+    volumes:
+      - static_volume:/staticfiles
+    ports:
+      - 1337:80
+    depends_on:
+      - exitosa-core
+    networks:
+      - app-tier
+volumes:
+  postgres_data:
+  static_volume:
+
+networks:
+  app-tier:
+    driver: bridge
+
