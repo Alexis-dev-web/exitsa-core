@@ -1,0 +1,1 @@
+from .user_view_test import UserViewTest
