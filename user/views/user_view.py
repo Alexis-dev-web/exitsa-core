@@ -33,7 +33,7 @@ class UserView(APIView):
 
             self.logger.info(f"UserView#post SUCCESS - Get user - userId={user.id}")
 
-            return Response(self.user_response.to_json(user), status=api_status.HTTP_201_CREATED)
+            return Response(self.user_response.to_json(user), status=api_status.HTTP_200_OK)
         except serializers.ValidationError as error:
             self.logger.error(f'UserView#get FAILURE - error to get user - message{str(error.detail)})')
             return Response({"message": error.detail}, status=api_status.HTTP_400_BAD_REQUEST)

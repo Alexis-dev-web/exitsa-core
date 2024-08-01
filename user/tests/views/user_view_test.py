@@ -105,5 +105,5 @@ class UserViewTest(TestCase):
         )
 
         data = response.json()
-        self.assertEqual(response.status_code, 201)
+        self.assertEqual(response.status_code, 200)
         self.assertEqual(data['email'], 'testi3ng@exitosa.test')
