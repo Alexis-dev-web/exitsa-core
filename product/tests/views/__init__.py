@@ -1,0 +1,1 @@
+from .product_view_test import ProductViewTest

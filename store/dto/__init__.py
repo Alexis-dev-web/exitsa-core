@@ -1,1 +1,2 @@
 from .create_update_store_dto import CreateOrUpdateStoreDTO
+from .add_product_to_store_dto import AddProductToStoreDTO

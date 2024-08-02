@@ -10,5 +10,10 @@ messages = {
     
     #Store
     'store_exist': 'Store already exist',
-    'store_not_exist': 'Store does not exist'
+    'store_not_exist': 'Store does not exist',
+
+    #Product
+    'product_sku_exists': 'SKU already exist',
+    'product_not_exist': 'Product does not exist',
+    'product_already_assign': 'The product already exist in store'
 }
