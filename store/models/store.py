@@ -16,6 +16,7 @@ class Store(models.Model):
     url = models.CharField(max_length=255, null=True)
     type = models.CharField(choices=STORE_CHOICE)
     active = models.BooleanField(default=True)
+    is_provider = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     deleted_at = models.DateTimeField(blank=True, null=True)
