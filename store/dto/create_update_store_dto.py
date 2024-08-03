@@ -7,6 +7,7 @@ from store.models import Store
 class CreateOrUpdateStoreDTO(BaseDto):
     name: str
     type: str
+    is_provider: bool = False
     description: str = None
     url: str = None
     store_id: str = None

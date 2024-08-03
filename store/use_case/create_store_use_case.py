@@ -12,6 +12,7 @@ class CreateOrUpdateStoreUseCase(UseCase):
         store.description = request.description
         store.url = request.url
         store.type = request.type
+        store.is_provider = request.is_provider
 
         store.save()
 
