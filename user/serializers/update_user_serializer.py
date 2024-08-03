@@ -3,13 +3,11 @@ from rest_framework import serializers
 from utils.error_messages import messages
 
 from user.models import User
-from .create_user_serializer import CreateUserSerializer
+from .basic_user_serializer import BasicUserSerializer
 
 
-class UpdateUserSerializer(CreateUserSerializer):
+class UpdateUserSerializer(BasicUserSerializer):
     user_id = serializers.UUIDField()
-    password = serializers.CharField(max_length=255, required=False)
-    confirm_password = serializers.CharField(max_length=255, required=False)
     user = serializers.SerializerMethodField('_validate_user')
 
     def _validate_user(self, data: dict) -> User:
@@ -20,8 +18,8 @@ class UpdateUserSerializer(CreateUserSerializer):
         
         email_exits = self.user_repository.get_by_email(email)
 
-        if email_exits and user.id != user_id:
-            raise serializers.ValidationError(messages['user_exist'])
+        if email_exits and email_exits.id != user_id:
+            raise serializers.ValidationError({'user': [messages['user_exist']]})
 
         return user
         

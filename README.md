@@ -46,3 +46,14 @@ User default:
     ```
         $ python manage.py makemigrations --empty <yourappname>
     ```
+
+## Documentation
+
+  The structor off project each module or app is a package to return especific endpoints and each contain:
+  
+    - dto: Data that use to manipulate the request in the app
+    - migrations: Data migration in db
+    - models: The models and repositories to call and manipulate the db
+    - response: Data that return the endpoint
+    - serializers: Is used as validator
+    - use_cases: The process to execute especific action in app

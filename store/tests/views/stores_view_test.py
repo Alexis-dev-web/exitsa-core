@@ -1,11 +1,5 @@
-import os
-import django
-
 from unittest.mock import patch
 from django.urls import reverse
-
-os.environ['DJANGO_SETTINGS_MODULE'] = 'exitosa_core.settings'
-django.setup()
 
 from utils.base_test_case import BaseCase
 from store.tests.dummy_data import StoreDummyData

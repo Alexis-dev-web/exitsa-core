@@ -1,12 +1,11 @@
 from rest_framework import serializers
 
+from utils.serializers.base_paginate_serializer import BasePaginateSerializer
 from utils.error_messages import messages
 from order.models import Order
 
 
-class GetOrdersSerializer(serializers.Serializer):
-    page = serializers.IntegerField(required=False, default=1)
-    limit = serializers.IntegerField(required=False, default=10)
+class GetOrdersSerializer(BasePaginateSerializer):
     start_date = serializers.DateField(required=False)
     end_date = serializers.DateField(required=False)
     status = serializers.ChoiceField(Order.STATUS_CHOICE, required=False)

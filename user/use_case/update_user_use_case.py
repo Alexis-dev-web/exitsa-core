@@ -1,11 +1,11 @@
 from utils.basic_use_case import UseCase
-from user.dto import UpdateUserDTO
+from user.dto import CreateUserDTO
 from user.models import User
 
 
 class UpdateUserUseCase(UseCase):
 
-    def execute(self, request: UpdateUserDTO) -> User:
+    def execute(self, request: CreateUserDTO) -> User:
         user = request.user
         user.first_name = request.first_name
         user.last_name = request.last_name

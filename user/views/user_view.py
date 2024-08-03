@@ -6,7 +6,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework import serializers
 
-from user.dto import CreateUserDTO, UpdateUserDTO
+from user.dto import CreateUserDTO, CreateUserDTO
 from user.use_case import CreateUserUseCase, UpdateUserUseCase
 from user.serializers import CreateUserSerializer, UpdateUserSerializer, GetUserSerializer
 from user.response import UserResponse
@@ -42,7 +42,7 @@ class UserView(APIView):
             return Response({"message": str(error_message)}, status=api_status.HTTP_500_INTERNAL_SERVER_ERROR)
 
     def post(self, request):
-        self.logger.info(f"UserView#post START - Create user - userAgent={request.META['HTTP_USER_AGENT']}")
+        self.logger.info(f"UserView#post START - Create user - userAgent={request.META.get('HTTP_USER_AGENT', None)}")
 
         try:
             serializer = CreateUserSerializer(data=request.data)
@@ -62,14 +62,14 @@ class UserView(APIView):
             return Response({"message": str(error_message)}, status=api_status.HTTP_500_INTERNAL_SERVER_ERROR)
 
     def patch(self, request):
-        self.logger.info(f"UserView#patch START - Update user - userAgent={request.META['HTTP_USER_AGENT']}")
+        self.logger.info(f"UserView#patch START - Update user - userAgent={request.META.get('HTTP_USER_AGENT', None)}")
 
         try:
             serializer = UpdateUserSerializer(data=request.data)
 
             serializer.is_valid(raise_exception=True)
 
-            user = self.update_user_use_case.execute(UpdateUserDTO.from_json(serializer.data))
+            user = self.update_user_use_case.execute(CreateUserDTO.from_json(serializer.data))
 
             self.logger.info(f"UserView#patch SUCCESS - Update user - userId={user.id}")
 

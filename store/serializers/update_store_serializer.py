@@ -4,14 +4,10 @@ from utils.error_messages import messages
 from store.models import Store
 from store.services import StoreValidators
 from utils.utils import validate_url
+from .create_store_serializer import CreateStoreSerializer
 
 
-class UpdatetoreSerializer(serializers.Serializer):
-    name = serializers.CharField(max_length=100)
-    description = serializers.CharField(max_length=1000, required=False)
-    type = serializers.ChoiceField(Store.STORE_CHOICE)
-    url = serializers.CharField(max_length=255, required=False)
-    is_provider = serializers.BooleanField(required=False)
+class UpdatetoreSerializer(CreateStoreSerializer):
     store_id = serializers.UUIDField()
     store = serializers.SerializerMethodField('_validate_store')
 
