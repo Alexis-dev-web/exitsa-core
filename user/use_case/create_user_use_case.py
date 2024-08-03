@@ -15,6 +15,7 @@ class CreateUserUseCase(UseCase):
             birthday=request.birthday,
             gender=request.gender
         )
+        
         #TODO: SEND email new account and set new permissions 
 
         return user

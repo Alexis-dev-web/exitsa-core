@@ -3,7 +3,7 @@ from utils.basic_use_case import UseCase
 from utils.response.paginate_response import PaginateResponse
 
 from product.dto import GetProductsDTO
-from product.models import Product, ProductRepository
+from product.models import ProductRepository
 from product.responses import ProductResponse
 
 

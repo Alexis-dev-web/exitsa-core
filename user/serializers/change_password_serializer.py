@@ -2,24 +2,19 @@ from rest_framework import serializers
 
 from utils.error_messages import messages
 
-from .basic_user_serializer import BasicUserSerializer
+from .get_user_serializer import GetUserSerializer
 
 
-class CreateUserSerializer(BasicUserSerializer):
+class ChangePasswordSerializer(GetUserSerializer):
     password = serializers.CharField(max_length=255)
     confirm_password = serializers.CharField(max_length=255)
 
     def validate(self, data: dict) -> dict:
-        email = data.get('email', None)
         password = data.get('password', None)
         confirm_password = data.get('confirm_password', None)
 
         if password != confirm_password:
             raise serializers.ValidationError({'password': [messages['passwords_not_equal']]})
-
-        email_take = self.user_repository.get_by_email(email)
-        if email_take:
-            raise serializers.ValidationError({'email': [messages['user_exist']]})
 
         return data
 

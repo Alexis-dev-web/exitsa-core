@@ -18,7 +18,8 @@ class OrderSerializer(serializers.Serializer):
     client_id = serializers.CharField(max_length=255, required=False)
     type = serializers.ChoiceField(Order.TYPE_CHOICE)
     store_id = serializers.CharField(max_length=255, required=False)
-    products = serializers.ListField(child=AddProductSerializer())
+    delivered_date = serializers.DateField(required=False)
+    products = serializers.ListField(child=AddProductSerializer(), required=False)
     store = serializers.SerializerMethodField('_validate_store')
     client = serializers.SerializerMethodField('_validate_client')
 

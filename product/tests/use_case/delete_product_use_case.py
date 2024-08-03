@@ -1,4 +1,3 @@
-import uuid
 from unittest.mock import patch
 
 from utils.tests.base_general_test import BaseGeneralTest

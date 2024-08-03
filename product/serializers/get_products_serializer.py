@@ -1,7 +1,5 @@
-from rest_framework import serializers
+from utils.serializers.base_paginate_serializer import BasePaginateSerializer
 
 
-class GetProductsSerializer(serializers.Serializer):
-    page = serializers.IntegerField(required=False, default=1)
-    limit = serializers.IntegerField(required=False, default=10)
-
+class GetProductsSerializer(BasePaginateSerializer):
+    pass

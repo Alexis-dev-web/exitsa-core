@@ -16,7 +16,7 @@ class UpdateInventoryProductUseCase(UseCase):
                 product.in_existence += quantity
                 product.save()
                 return False, None
-                
+
             if quantity >= product.in_existence:
                 return False, None
 

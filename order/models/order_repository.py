@@ -16,7 +16,7 @@ class OrderRepository:
     def get_all(self) -> list[Order]:
         return Order.objects.all()
 
-    def get_by_dynamic_filters_paginate(self, filters: dict, limit: int = 10) -> list[Order]:
+    def get_by_dynamic_filters_paginate(self, filters: dict, limit: int = 10) -> Paginator:
         orders = Order.objects.filter(**filters).order_by('-created_at')
         paginator = Paginator(orders, limit)
         return paginator

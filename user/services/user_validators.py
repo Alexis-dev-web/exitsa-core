@@ -12,7 +12,7 @@ class UserValidators:
         user = self.userRepository.get_by_id(user_id)
         
         if not user:
-            raise serializers.ValidationError(message)
+            raise serializers.ValidationError({'user': [message]})
         
         return  user
 
