@@ -6,6 +6,8 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework import serializers
 
+from user.middlewares import permission_required
+
 from order.dto import GetOrdersDTO
 from order.use_case import GetOrdersUseCase
 from order.serializers import GetOrdersSerializer
@@ -19,7 +21,8 @@ class OrdersView(APIView):
         self.logger = logging.getLogger(__name__)
         self.get_orders_use_case = GetOrdersUseCase()
 
-    def get(self, request):
+    @permission_required('view_order')
+    def get(self, request, *args, **kwargs):
         self.logger.info(f"OrdersView#get START - Get orders - orderAgent={request.META.get('HTTP_order_AGENT', None)}")
 
         try:

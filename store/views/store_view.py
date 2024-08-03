@@ -6,6 +6,8 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework import serializers
 
+from user.middlewares import permission_required
+
 from store.dto import CreateOrUpdateStoreDTO
 from store.response import StoreResponse
 from store.serializers import CreateStoreSerializer, GetStoreSerializer, UpdatetoreSerializer
@@ -21,6 +23,7 @@ class StoreView(APIView):
         self.create_store_use_case = CreateOrUpdateStoreUseCase()
         self.store_response = StoreResponse()
 
+    @permission_required('view_store')
     def get(self, request):
         self.logger.info(f"StoreView#get START - Get store - userAgent={request.META.get('HTTP_USER_AGENT', None)}")
 
@@ -40,6 +43,7 @@ class StoreView(APIView):
             self.logger.error(f'StoreView#get FAILURE - error to get store - message{str(error_message)})')
             return Response({"message": str(error_message)}, status=api_status.HTTP_500_INTERNAL_SERVER_ERROR)
 
+    @permission_required('add_store')
     def post(self, request):
         self.logger.info(f"StoreView#post START - Create store - userAgent={request.META.get('HTTP_USER_AGENT', None)}")
 
@@ -60,6 +64,7 @@ class StoreView(APIView):
             self.logger.error(f'StoreView#post FAILURE - error to create store - message{str(error_message)})')
             return Response({"message": str(error_message)}, status=api_status.HTTP_500_INTERNAL_SERVER_ERROR)
 
+    @permission_required('change_store')
     def patch(self, request):
         self.logger.info(f"StoreView#patch START - Update store - userAgent={request.META.get('HTTP_USER_AGENT', None)}")
 

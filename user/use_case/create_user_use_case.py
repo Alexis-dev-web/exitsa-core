@@ -13,9 +13,11 @@ class CreateUserUseCase(UseCase):
             second_last_name=request.second_last_name,
             phone=request.phone,
             birthday=request.birthday,
-            gender=request.gender
+            gender=request.gender,
+            is_superuser=request.is_superuser
         )
-        
+
+        user.groups.set([request.group])
         #TODO: SEND email new account and set new permissions 
 
         return user

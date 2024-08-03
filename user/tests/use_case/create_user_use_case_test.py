@@ -13,11 +13,14 @@ class CreateUserUseCaseTest(BaseGeneralTest):
         self.create_user_use_case = CreateUserUseCase()
 
     @patch('user.models.User.save')
-    def test_create_user(self, mock_user):
+    @patch('user.models.User.groups')
+    def test_create_user(self, mock_user_groups, mock_user):
         user = self.dummy_data.build_user_test()
         user_request = self.dummy_data.build_basic_request()
+        group = self.dummy_data.basic_group()
 
         mock_user.return_value = user
+        mock_user_groups.set = patch.object([group], 'set')
 
         new_user = self.create_user_use_case.execute(CreateUserDTO.from_json(user_request))
 

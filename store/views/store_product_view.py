@@ -6,6 +6,8 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework import serializers
 
+from user.middlewares import permission_required
+
 from store.serializers import AddProductToSoreSerializer
 from store.dto import AddProductToStoreDTO
 from store.use_case import AddProductToStoreUseCase
@@ -21,6 +23,7 @@ class StoreProductView(APIView):
         self.add_product_to_store_use_case = AddProductToStoreUseCase()
         self.store_product_response = StoreProductResponse()
 
+    @permission_required('add_storehasproduct')
     def post(self, request):
         self.logger.info(f"StoreProductView#post START - Add product to store - userAgent={request.META.get('HTTP_USER_AGENT', None)}")
 

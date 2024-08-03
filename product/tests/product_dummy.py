@@ -11,6 +11,7 @@ class ProductDummy:
         user.first_name = 'test'
         user.last_name = 'tets last name'
         user.email = email
+        user.is_superuser = True
 
         return user
 

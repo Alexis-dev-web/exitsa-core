@@ -13,6 +13,10 @@ class UpdateUserUseCase(UseCase):
         user.second_last_name = request.second_last_name
         user.birthday = request.birthday
         user.gender = request.gender
+        user.is_superuser = request.is_superuser
 
         user.save()
+        
+        user.groups.set([request.group])
+
         return user
