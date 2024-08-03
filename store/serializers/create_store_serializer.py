@@ -6,6 +6,7 @@ from utils.utils import validate_url
 
 
 class CreateStoreSerializer(serializers.Serializer):
+    is_provider = serializers.BooleanField(required=False)
     name = serializers.CharField(max_length=100)
     description = serializers.CharField(max_length=1000, required=False)
     type = serializers.ChoiceField(Store.STORE_CHOICE)

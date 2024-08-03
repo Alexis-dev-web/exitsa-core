@@ -7,7 +7,7 @@ from store.models import Store
 class Product(models.Model):
     STATE_PRODUCT_CHOICE = [
         ('IN_STOCK', 'IN_STOCK'),
-        ('REFILLING', 'REFELLING'),
+        ('REFILLING', 'REFILLING'),
         ('SOULD_OUT', 'SOULD_OUT')
     ]
     

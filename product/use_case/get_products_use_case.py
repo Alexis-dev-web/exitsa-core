@@ -21,4 +21,4 @@ class GetProductsUseCase(UseCase):
 
         items = [self.product_response.to_json(product) for product in page.object_list or []]
 
-        return self.paginate_response.to_json(page, products.num_pages, items)
+        return self.paginate_response.to_json(page, products.num_pages, products.count, items)

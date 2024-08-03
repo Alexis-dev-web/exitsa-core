@@ -9,6 +9,7 @@ class StoreResponse:
             'name': store.name,
             'description': store.description,
             'type': store.type,
+            'is_provider': store.is_provider,
             'url': store.url,
             'active': store.active,
             'created_at': str(store.created_at),
