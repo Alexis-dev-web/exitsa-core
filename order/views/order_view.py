@@ -6,6 +6,8 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework import serializers
 
+from user.middlewares import permission_required
+
 from order.dto import CreateOrderDTO, UpdateOrderStateDTO
 from order.use_case import CreateOrderUseCase, GetOrderUseCase, UpdateOrderStateUseCase, UpdateOrderUseCase
 from order.serializers import OrderSerializer, GetOrderSerializer, UpdateOrderStateSerializer, UpdateOrderSerializer
@@ -24,6 +26,7 @@ class OrderView(APIView):
         self.order_response = OrderResponse()
         self.update_order_use_case = UpdateOrderUseCase()
 
+    @permission_required('add_order')
     def post(self, request):
         self.logger.info(f"OrderView#post START - Create order - orderAgent={request.META.get('HTTP_order_AGENT', None)}")
 
@@ -44,6 +47,7 @@ class OrderView(APIView):
             self.logger.error(f'OrderView#post FAILURE - error to create order - message{str(error_message)})')
             return Response({"message": str(error_message)}, status=api_status.HTTP_500_INTERNAL_SERVER_ERROR)
 
+    @permission_required('view_order')
     def get(self, request):
         self.logger.info(f"OrderView#get START - Get order - orderAgent={request.META.get('HTTP_order_AGENT', None)}")
 
@@ -65,6 +69,7 @@ class OrderView(APIView):
             self.logger.error(f'OrderView#get FAILURE - error to get order - message{str(error_message)})')
             return Response({"message": str(error_message)}, status=api_status.HTTP_500_INTERNAL_SERVER_ERROR)
 
+    @permission_required('change_order')
     def put(self, request):
         self.logger.info(f"OrderView#put START - Update order status- orderAgent={request.META.get('HTTP_order_AGENT', None)}")
 
@@ -85,6 +90,7 @@ class OrderView(APIView):
             self.logger.error(f'OrderView#put FAILURE - error to update order status - message{str(error_message)})')
             return Response({"message": str(error_message)}, status=api_status.HTTP_500_INTERNAL_SERVER_ERROR)
 
+    @permission_required('change_order')
     def patch(self, request):
         self.logger.info(f"OrderView#patch START - Update order - orderAgent={request.META.get('HTTP_order_AGENT', None)}")
 

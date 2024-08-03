@@ -5,6 +5,8 @@ from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
+from user.middlewares import permission_required
+
 from store.use_case import GetStoresUseCase
 
 
@@ -16,6 +18,7 @@ class StoresView(APIView):
         self.logger = logging.getLogger(__name__)
         self.get_stores_use_case = GetStoresUseCase()
 
+    @permission_required('view_store')
     def get(self, request):
         self.logger.info(f"StoresView#get START - Get stores - userAgent={request.META.get('HTTP_USER_AGENT', None)}")
 

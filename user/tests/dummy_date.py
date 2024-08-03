@@ -1,6 +1,7 @@
 import uuid
 
 from user.models import User
+from django.contrib.auth.models import Group
 
 
 class UserDummyData:
@@ -10,6 +11,7 @@ class UserDummyData:
         user.first_name = 'test'
         user.last_name = 'Smith'
         user.email = email
+        user.is_superuser = True
 
         return user
 
@@ -21,7 +23,7 @@ class UserDummyData:
             'password': 'newPassword',
             'confirm_password': 'newPassword',
             'gender': 'M',
-            'group': 'ADMINS'
+            'group': 1
         }
 
     def request_args_get(self) ->dict:
@@ -36,3 +38,9 @@ class UserDummyData:
             'password': 'newPassword',
             'confirm_password': 'newPassword',
         }
+
+    def basic_group(self):
+        group = Group()
+        group.name = 'New group'
+
+        return group

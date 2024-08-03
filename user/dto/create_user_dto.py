@@ -9,7 +9,7 @@ class CreateUserDTO(BaseDto):
     first_name: str
     last_name: str
     email: str
-    group: str
+    group: int
     user_id: str = None
     user: User = None
     gender: str = None
@@ -18,4 +18,5 @@ class CreateUserDTO(BaseDto):
     second_last_name: str = None
     password: str = None
     confirm_password: str = None
+    is_superuser: bool = False
 

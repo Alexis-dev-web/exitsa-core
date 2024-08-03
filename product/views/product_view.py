@@ -6,6 +6,8 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework import serializers
 
+from user.middlewares import permission_required
+
 from product.dto import CreateOrUpdateDTO
 from product.serializers import GetProductSerializer, CreateProductSerializer, UpdateProductSerializer
 from product.use_case import CreateOrUpdateProductUseCase, DeleteProductUseCase
@@ -22,6 +24,7 @@ class ProductView(APIView):
         self.create_product_use_case = CreateOrUpdateProductUseCase()
         self.delete_product_use_case = DeleteProductUseCase()
 
+    @permission_required('view_product')
     def get(self, request):
         self.logger.info(f"ProductView#get START - Get product - userAgent={request.META.get('HTTP_USER_AGENT', None)}")
 
@@ -41,6 +44,7 @@ class ProductView(APIView):
             self.logger.error(f'ProductView#get FAILURE - error to get product - message{str(error_message)})')
             return Response({"message": str(error_message)}, status=api_status.HTTP_500_INTERNAL_SERVER_ERROR)
 
+    @permission_required('add_product')
     def post(self, request):
         self.logger.info(f"ProductView#post START - Create product - userAgent={request.META.get('HTTP_USER_AGENT', None)}")
 
@@ -61,6 +65,7 @@ class ProductView(APIView):
             self.logger.error(f'ProductView#post FAILURE - error to create product - message{str(error_message)})')
             return Response({"message": str(error_message)}, status=api_status.HTTP_500_INTERNAL_SERVER_ERROR)
 
+    @permission_required('change_product')
     def patch(self, request):
         self.logger.info(f"ProductView#patch START - Update product - userAgent={request.META.get('HTTP_USER_AGENT', None)}")
 
@@ -81,6 +86,7 @@ class ProductView(APIView):
             self.logger.error(f'ProductView#patch FAILURE - error to update product - message{str(error_message)})')
             return Response({"message": str(error_message)}, status=api_status.HTTP_500_INTERNAL_SERVER_ERROR)
 
+    @permission_required('delete_product')
     def delete(self, request):
         self.logger.info(f"ProductView#delete START - Delete product - userAgent={request.META.get('HTTP_USER_AGENT', None)}")
 

@@ -6,6 +6,8 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework import serializers
 
+from user.middlewares import permission_required
+
 from user.dto import CreateUserDTO, CreateUserDTO
 from user.use_case import CreateUserUseCase, UpdateUserUseCase
 from user.serializers import CreateUserSerializer, UpdateUserSerializer, GetUserSerializer
@@ -22,6 +24,7 @@ class UserView(APIView):
         self.user_response = UserResponse()
         self.update_user_use_case = UpdateUserUseCase()
 
+    @permission_required('view_user')
     def get(self, request):
         self.logger.info(f"UserView#get START - Get user - userAgent={request.META.get('HTTP_USER_AGENT', None)}")
 
@@ -41,11 +44,12 @@ class UserView(APIView):
             self.logger.error(f'UserView#get FAILURE - error to get user - message{str(error_message)})')
             return Response({"message": str(error_message)}, status=api_status.HTTP_500_INTERNAL_SERVER_ERROR)
 
+    @permission_required('add_user')
     def post(self, request):
         self.logger.info(f"UserView#post START - Create user - userAgent={request.META.get('HTTP_USER_AGENT', None)}")
 
         try:
-            serializer = CreateUserSerializer(data=request.data)
+            serializer = CreateUserSerializer(data=request.data, context={'request': request})
 
             serializer.is_valid(raise_exception=True)
 
@@ -61,11 +65,12 @@ class UserView(APIView):
             self.logger.error(f'UserView#post FAILURE - error to create user - message{str(error_message)})')
             return Response({"message": str(error_message)}, status=api_status.HTTP_500_INTERNAL_SERVER_ERROR)
 
+    @permission_required('change_user')
     def patch(self, request):
         self.logger.info(f"UserView#patch START - Update user - userAgent={request.META.get('HTTP_USER_AGENT', None)}")
 
         try:
-            serializer = UpdateUserSerializer(data=request.data)
+            serializer = UpdateUserSerializer(data=request.data, context={'request': request})
 
             serializer.is_valid(raise_exception=True)
 

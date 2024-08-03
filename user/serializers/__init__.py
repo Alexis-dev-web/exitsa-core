@@ -3,3 +3,6 @@ from .update_user_serializer import UpdateUserSerializer
 from .get_user_serializer import GetUserSerializer
 from .get_users_serializer import GetUsersSerializer
 from .change_password_serializer import ChangePasswordSerializer
+from .add_permission_to_group_serializer import AddPermissionToGroupSerializer
+from .create_group_serializer import CreateGroupSerializer
+from .get_group_serializer import GetGroupSerializer

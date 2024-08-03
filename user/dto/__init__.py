@@ -1,3 +1,5 @@
 from .create_user_dto import CreateUserDTO
 from .get_users_dto import GetUsersDTO
-from.change_password_dto import ChangePasswordDTO
+from .change_password_dto import ChangePasswordDTO
+from .add_permission_to_group_dto import AddPermisionToGroupDTO
+from .create_group_dto import CreateGroupDTO

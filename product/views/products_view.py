@@ -6,6 +6,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework import serializers
 
+from user.middlewares import permission_required
 from product.dto import GetProductsDTO
 from product.serializers import GetProductsSerializer
 from product.use_case import GetProductsUseCase
@@ -21,6 +22,7 @@ class ProductsView(APIView):
         self.product_response = ProductResponse()
         self.get_products_use_case = GetProductsUseCase()
 
+    @permission_required('view_product')
     def get(self, request):
         self.logger.info(f"ProductsView#get START - Get products - userAgent={request.META.get('HTTP_USER_AGENT', None)}")
 

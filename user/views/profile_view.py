@@ -10,6 +10,7 @@ from user.dto import ChangePasswordDTO
 from user.use_case import ChangePasswordUseCase
 from user.serializers import ChangePasswordSerializer
 from user.response import UserResponse
+from user.middlewares import permission_required
 
 
 class ProfileView(APIView):
@@ -21,6 +22,7 @@ class ProfileView(APIView):
         self.change_password_use_case = ChangePasswordUseCase()
         self.user_response = UserResponse()
 
+    @permission_required('iam_change_password')
     def patch(self, request):
         self.logger.info(f"ProfileView#patch START - Change password - userAgent={request.META.get('HTTP_USER_AGENT', None)}")
 
