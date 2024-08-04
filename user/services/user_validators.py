@@ -49,3 +49,11 @@ class UserValidators:
             raise serializers.ValidationError({'group': [messages['group_not_exist']]})
 
         return group
+
+    def validate_group_not_exist_by_name(self, name: str) -> Group:
+        group = self.group_repository.get_by_name(name)
+
+        if not group:
+            raise serializers.ValidationError({'group': [messages['group_not_exist']]})
+
+        return group

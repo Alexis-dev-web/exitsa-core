@@ -295,31 +295,6 @@ class UserViewTest(BaseCase):
 
     @patch('rest_framework_simplejwt.authentication.JWTAuthentication.authenticate')
     @patch('django.contrib.auth.models.Group.objects.all')
-    def test_save_user_group_required(self, mock_group, mock_authenticate):
-        user_login = self.dummy_data.build_user_test()
-        group = self.dummy_data.basic_group()
-        json_request = self.dummy_data.build_basic_request()
-        json_request.pop('group', None)
-
-        #mock
-        mock_authenticate.return_value = (user_login, None)
-        mock_group.return_value = group
-
-        url = reverse("user:user")
-
-        self.client.credentials(HTTP_AUTHORIZATION='Bearer validtoken')
-        response = self.client.post(
-            url,
-            data=json.dumps(json_request),
-            content_type="application/json"
-        )
-
-        data = response.json()
-        self.assertEqual(response.status_code, 400)
-        self.assertEqual(data['message'], {'group': ['This field is required.']})
-
-    @patch('rest_framework_simplejwt.authentication.JWTAuthentication.authenticate')
-    @patch('django.contrib.auth.models.Group.objects.all')
     def test_save_user_birthday_invalid_format(self, mock_group, mock_authenticate):
         user_login = self.dummy_data.build_user_test()
         group = self.dummy_data.basic_group()
@@ -398,7 +373,7 @@ class UserViewTest(BaseCase):
     @patch('rest_framework_simplejwt.authentication.JWTAuthentication.authenticate')
     @patch('user.models.UserRepository.get_by_email')
     @patch('user.models.User.save')
-    @patch('django.contrib.auth.models.Group.objects.all')
+    @patch('user.models.GroupRepository.get_by_name')
     @patch('user.models.User.groups')
     def test_successful_save(self, mock_user_groups, mock_group, mock_save_user, mock_user_email, mock_authenticate):
         user_login = self.dummy_data.build_user_test()
@@ -412,6 +387,7 @@ class UserViewTest(BaseCase):
         mock_user_email.return_value = None
         mock_save_user.return_value = second_user
         mock_user_groups.set = patch.object([group], 'set')
+        mock_user_groups.first.return_value = None
 
         url = reverse("user:user")
 
@@ -578,29 +554,6 @@ class UserViewTest(BaseCase):
         self.assertEqual(data['message'], {'gender': ['"P" is not a valid choice.']})
 
     @patch('rest_framework_simplejwt.authentication.JWTAuthentication.authenticate')
-    def test_update_user_group_required(self, mock_authenticate):
-        user_login = self.dummy_data.build_user_test()
-        json_request = self.dummy_data.build_basic_request()
-        json_request['user_id'] = str(uuid.uuid4())
-        json_request.pop('group', None)
-
-        #mock
-        mock_authenticate.return_value = (user_login, None)
-
-        url = reverse("user:user")
-
-        self.client.credentials(HTTP_AUTHORIZATION='Bearer validtoken')
-        response = self.client.patch(
-            url,
-            data=json.dumps(json_request),
-            content_type="application/json"
-        )
-
-        data = response.json()
-        self.assertEqual(response.status_code, 400)
-        self.assertEqual(data['message'], {'group': ['This field is required.']})
-
-    @patch('rest_framework_simplejwt.authentication.JWTAuthentication.authenticate')
     @patch('django.contrib.auth.models.Group.objects.all')
     def test_update_user_birthday_invalid_format(self, mock_group, mock_authenticate):
         user_login = self.dummy_data.build_user_test()
@@ -727,6 +680,8 @@ class UserViewTest(BaseCase):
         mock_get_by_email.return_value = second_user
         mock_save_user.return_value = second_user
         mock_user_groups.set = patch.object([group], 'set')
+        mock_user_groups.first.return_value = None
+        mock_user_groups.first.return_value = None
 
         url = reverse("user:user")
 

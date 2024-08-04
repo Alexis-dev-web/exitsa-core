@@ -4,6 +4,9 @@ from django.contrib.auth.models import Group
 
 class GroupRepository:
 
+    def get_all(self) -> list:
+        return Group.objects.all()
+
     def get_by_name(self, name: str) -> Group:
         return Group.objects.filter(name=name).first()
 

@@ -26,7 +26,12 @@ class UpdateUserSerializer(BasicUserSerializer):
     def validate(self, data):
         request = self.context.get('request')
         is_superuser = data.get('is_superuser', False)
+        group = data.get('group', None)
 
         self.user_validators.validate_can_not_create_super_user(request.user, is_superuser)
+
+        if group:
+            self.user_validators.validate_grup_exist(group)
+
         return data
 
