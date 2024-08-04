@@ -16,6 +16,6 @@ class CreateGroupUseCase(UseCase):
 
         group.save()
 
-        group.permissions = group.permissions.set(request.permissions)
+        group.permissions.set(request.permissions)
 
         return self.group_response.to_json(group)

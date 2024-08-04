@@ -1,7 +1,9 @@
 import uuid
 
+from django.contrib.auth.models import Group, Permission
+from django.contrib.contenttypes.models import ContentType
+
 from user.models import User
-from django.contrib.auth.models import Group
 
 
 class UserDummyData:
@@ -22,8 +24,7 @@ class UserDummyData:
             'email': 'testing@exitosa.test',
             'password': 'newPassword',
             'confirm_password': 'newPassword',
-            'gender': 'M',
-            'group': 1
+            'gender': 'M'
         }
 
     def request_args_get(self) ->dict:
@@ -44,3 +45,17 @@ class UserDummyData:
         group.name = 'New group'
 
         return group
+
+    def dict_create_group(self) -> dict:
+        return {
+            'group': 'ADMINS',
+            'permissions': [1]
+        }
+
+    def build_permission(self):
+        permission = Permission()
+        permission.name = 'New permission'
+        permission.codename = 'new_permisison'
+        permission.content_type = ContentType.objects.get_for_model(User)
+
+        return permission

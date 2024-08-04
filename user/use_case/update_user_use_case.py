@@ -1,9 +1,12 @@
 from utils.basic_use_case import UseCase
 from user.dto import CreateUserDTO
-from user.models import User
+from user.models import User, GroupRepository
 
 
 class UpdateUserUseCase(UseCase):
+
+    def __init__(self) -> None:
+        self.group_repository = GroupRepository()
 
     def execute(self, request: CreateUserDTO) -> User:
         user = request.user
@@ -17,6 +20,9 @@ class UpdateUserUseCase(UseCase):
 
         user.save()
         
+        if not request.group:
+            request.group = self.group_repository.get_by_name('CLIENT')
+
         user.groups.set([request.group])
 
         return user

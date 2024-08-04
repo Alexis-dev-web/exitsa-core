@@ -14,6 +14,7 @@ class UserResponse:
             'birthday': user.birthday,
             'gender': user.gender,
             'is_active': user.is_active,
+            'group': user.groups.first().name if user.groups.first() else None,
             'is_superuser': user.is_superuser,
             'last_login': str(user.last_login),
             'created_at': str(user.created_at),

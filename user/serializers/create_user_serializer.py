@@ -13,10 +13,15 @@ class CreateUserSerializer(BasicUserSerializer):
         email = data.get('email', None)
         password = data.get('password', None)
         confirm_password = data.get('confirm_password', None)
-        request = self.context.get('request')
+        request = self.context.get('request', None)
         is_superuser = data.get('is_superuser', False)
+        group = data.get('group', None)
 
-        self.user_validators.validate_can_not_create_super_user(request.user, is_superuser)
+        if group:
+            self.user_validators.validate_grup_exist(group)
+        
+        if request:
+            self.user_validators.validate_can_not_create_super_user(request.user, is_superuser)
 
         if password != confirm_password:
             raise serializers.ValidationError({'password': [messages['passwords_not_equal']]})

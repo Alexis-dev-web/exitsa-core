@@ -148,3 +148,224 @@ class ProfileViewTest(BaseCase):
         data = response.json()
         self.assertEqual(response.status_code, 200)
         self.assertEqual(data['first_name'], user_login.first_name)
+
+    def test_save_user_first_name_required(self):
+        json_request = self.dummy_data.build_basic_request()
+        json_request.pop('first_name', None)
+
+        url = reverse("user:profile")
+
+        response = self.client.post(
+            url,
+            data=json.dumps(json_request),
+            content_type="application/json"
+        )
+
+        data = response.json()
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(data['message'], {'first_name': ['This field is required.']})
+
+    def test_save_user_last_name_required(self):
+        json_request = self.dummy_data.build_basic_request()
+        json_request.pop('last_name', None)
+
+        url = reverse("user:profile")
+
+        response = self.client.post(
+            url,
+            data=json.dumps(json_request),
+            content_type="application/json"
+        )
+
+        data = response.json()
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(data['message'], {'last_name': ['This field is required.']})
+
+    def test_save_user_email_required(self):
+        json_request = self.dummy_data.build_basic_request()
+        json_request.pop('email', None)
+
+        url = reverse("user:profile")
+
+        response = self.client.post(
+            url,
+            data=json.dumps(json_request),
+            content_type="application/json"
+        )
+
+        data = response.json()
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(data['message'], {'email': ['This field is required.']})
+
+    def test_save_user_gender_required(self):
+        json_request = self.dummy_data.build_basic_request()
+        json_request.pop('gender', None)
+
+        url = reverse("user:profile")
+
+        response = self.client.post(
+            url,
+            data=json.dumps(json_request),
+            content_type="application/json"
+        )
+
+        data = response.json()
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(data['message'], {'gender': ['This field is required.']})
+
+    def test_save_user_gender_invalid(self):
+        json_request = self.dummy_data.build_basic_request()
+        json_request['gender'] = 'P'
+
+        url = reverse("user:profile")
+
+        response = self.client.post(
+            url,
+            data=json.dumps(json_request),
+            content_type="application/json"
+        )
+
+        data = response.json()
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(data['message'], {'gender': ['"P" is not a valid choice.']})
+
+    def test_save_user_missing_password(self):
+        json_request = self.dummy_data.build_basic_request()
+        json_request.pop('password', None)
+
+        url = reverse("user:profile")
+
+        response = self.client.post(
+            url,
+            data=json.dumps(json_request),
+            content_type="application/json"
+        )
+
+        data = response.json()
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(data['message'], {'password': ['This field is required.']})
+
+    def test_save_user_missing_confirm_password(self):
+        json_request = self.dummy_data.build_basic_request()
+        json_request.pop('confirm_password', None)
+
+        url = reverse("user:profile")
+
+        response = self.client.post(
+            url,
+            data=json.dumps(json_request),
+            content_type="application/json"
+        )
+
+        data = response.json()
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(data['message'], {'confirm_password': ['This field is required.']})
+
+    def test_save_user_invalid_email(self):
+        json_request = self.dummy_data.build_basic_request()
+        json_request['email'] = 'alwex'
+
+        url = reverse("user:profile")
+
+        response = self.client.post(
+            url,
+            data=json.dumps(json_request),
+            content_type="application/json"
+        )
+
+        data = response.json()
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(data['message'], {'email': ['Enter a valid email address.']})
+
+    def test_save_user_invalid_birthday(self):
+        json_request = self.dummy_data.build_basic_request()
+        json_request['birthday'] = 'alwex'
+
+        url = reverse("user:profile")
+
+        response = self.client.post(
+            url,
+            data=json.dumps(json_request),
+            content_type="application/json"
+        )
+
+        data = response.json()
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(data['message'], {'birthday': ['Date has wrong format. Use one of these formats instead: YYYY-MM-DD.']})
+
+    def test_save_user_phone_max_lenght(self):
+        json_request = self.dummy_data.build_basic_request()
+        json_request['phone'] = '5650451446465'
+
+        url = reverse("user:profile")
+
+        response = self.client.post(
+            url,
+            data=json.dumps(json_request),
+            content_type="application/json"
+        )
+
+        data = response.json()
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(data['message'], {'phone': ['Ensure this field has no more than 10 characters.']})
+
+    def test_save_user_passwords_not_match(self):
+        json_request = self.dummy_data.build_basic_request()
+        json_request['confirm_password'] = '5650451446465'
+
+        url = reverse("user:profile")
+
+        response = self.client.post(
+            url,
+            data=json.dumps(json_request),
+            content_type="application/json"
+        )
+
+        data = response.json()
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(data['message'], {'password': ['The password and confirm password not match']})
+
+    @patch('user.models.UserRepository.get_by_email')
+    def test_save_user_email_already_exist(self, mock_user):
+        user = self.dummy_data.build_user_test()
+        json_request = self.dummy_data.build_basic_request()
+
+        # mock
+        mock_user.return_value = user
+        url = reverse("user:profile")
+
+        response = self.client.post(
+            url,
+            data=json.dumps(json_request),
+            content_type="application/json"
+        )
+
+        data = response.json()
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(data['message'], {'email': ['User already exist']})
+
+    @patch('user.models.User')
+    @patch('user.models.UserRepository')
+    @patch('user.models.GroupRepository')
+    def test_save_user_successful(self, mock_user_groups, mock_repository, mock_user):
+        user = self.dummy_data.build_user_test()
+        json_request = self.dummy_data.build_basic_request()
+        group = self.dummy_data.basic_group()
+
+        # mock
+        mock_repository.get_by_email.return_value = None
+        mock_user.save.return_value = user
+        mock_user.first.return_value = None
+        mock_user_groups.get_by_name = group
+
+        url = reverse("user:profile")
+
+        response = self.client.post(
+            url,
+            data=json.dumps(json_request),
+            content_type="application/json"
+        )
+
+        data = response.json()
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(data['email'], json_request['email'])

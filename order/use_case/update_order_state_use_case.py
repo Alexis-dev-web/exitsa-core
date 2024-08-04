@@ -50,6 +50,6 @@ class UpdateOrderStateUseCase(UseCase):
         order.status = request.state
         order.save()
         
-        print(request.order.products)
+
 
         return order
