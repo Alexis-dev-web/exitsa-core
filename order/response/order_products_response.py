@@ -1,3 +1,5 @@
+from utils.base_response import BaseResponseModel
+
 from order.models import OrderProduct
 from product.responses import ProductResponse
 

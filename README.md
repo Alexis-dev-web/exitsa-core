@@ -25,6 +25,12 @@ Create core to exitosa store
        $ python manage.py migrate
     ```
 
+4. Run base profiles and permissions
+
+    ```
+       $ python manage.py create_base_profiles
+    ```
+
 The project is running on http://127.0.0.1:1337
 
 ## Dev Guide
@@ -59,6 +65,12 @@ User default:
 
     ```
         $ python manage.py create_fake_products
+    ```
+
+3.  Create fake orders
+
+    ```
+        $ python manage.py create_fake_orders
     ```
 
 ## Documentation

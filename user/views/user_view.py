@@ -44,7 +44,7 @@ class UserView(APIView):
             self.logger.error(f'UserView#get FAILURE - error to get user - message{str(error_message)})')
             return Response({"message": str(error_message)}, status=api_status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-    # @permission_required('add_user')
+    @permission_required('add_user')
     def post(self, request):
         self.logger.info(f"UserView#post START - Create user - userAgent={request.META.get('HTTP_USER_AGENT', None)}")
 

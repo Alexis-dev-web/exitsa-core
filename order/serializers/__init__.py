@@ -4,3 +4,4 @@ from .get_order_serializer import GetOrderSerializer
 from .get_orders_serializer import GetOrdersSerializer
 from .update_order_state_serializer import UpdateOrderStateSerializer
 from .update_order_serializer import UpdateOrderSerializer
+from .order_reports_serializer import OrderReportSerializer
