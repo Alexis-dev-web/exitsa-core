@@ -32,3 +32,11 @@ class OrderResponse:
         response['products'] = [self.order_product_response.response_with_product_data(product) for product in products or []]
 
         return response
+
+    def create_report(self, orders_by_status, product_more_sale) -> dict:
+        response = {
+            'orders_group': orders_by_status,
+            'product_more_sale': product_more_sale
+        }
+        
+        return response

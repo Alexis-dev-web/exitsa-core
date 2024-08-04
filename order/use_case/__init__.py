@@ -4,3 +4,4 @@ from .get_order_use_case import GetOrderUseCase
 from .get_orders_use_case import GetOrdersUseCase
 from .update_order_state_use_case import UpdateOrderStateUseCase
 from .update_order_use_case import UpdateOrderUseCase
+from .order_reports_use_case import OrderReportsUseCase

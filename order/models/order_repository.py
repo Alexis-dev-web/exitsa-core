@@ -1,3 +1,6 @@
+from datetime import date
+from django.db.models import Count
+
 from django.core.paginator import Paginator
 from .order import Order
 
@@ -25,3 +28,8 @@ class OrderRepository:
         orders = Order.objects.all().order_by('-created_at')
         paginator = Paginator(orders, limit)
         return paginator
+
+    def get_all_group_by_status(self, start_date: date, end_date: date) -> list:
+        return Order.objects.filter(created_at__range=(start_date, end_date))\
+                .values('status').annotate(total=Count('id'))\
+                    .order_by('status')

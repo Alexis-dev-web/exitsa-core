@@ -20,9 +20,9 @@ class Command(BaseCommand):
                 sku=generate_sku(),
                 name=fake.word(),
                 description=fake.text(),
-                base_pricing=fake.pydecimal(left_digits=5, right_digits=2, positive=True),
-                base_cost=fake.pydecimal(left_digits=5, right_digits=2, positive=True),
-                in_existence=fake.random_int(min=0, max=1000),
+                base_pricing=fake.pydecimal(left_digits=4, right_digits=2, positive=True),
+                base_cost=fake.pydecimal(left_digits=3, right_digits=2, positive=True),
+                in_existence=fake.random_int(min=0, max=500),
                 type='PHYSIC',
                 state='IN_STOCK',
             )

@@ -1,13 +1,8 @@
+from utils.base_response import BaseResponseModel
 from django.contrib.auth.models import Group, Permission
 
 
-class GroupResponse:
-
-    def to_json(self, group: Group) -> dict:
-        return {
-            'id': group.pk,
-            'name': group.name
-        }
+class GroupResponse(BaseResponseModel):
 
     def permission_to_json(self, permission: Permission) -> dict:
         return {
