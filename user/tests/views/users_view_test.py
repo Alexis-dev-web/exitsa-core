@@ -135,7 +135,7 @@ class UsersViewTest(BaseCase):
         self.assertEqual(1, len(data['items']))
 
     @patch('rest_framework_simplejwt.authentication.JWTAuthentication.authenticate')
-    @patch('user.models.UserRepository.get_by_email_paginate')
+    @patch('user.models.UserRepository.get_by_gender_paginate')
     def test_succesful_get_all_users_by_gender(self, mock_get_users, mock_authenticate):
         user_login = self.dummy_data.build_user_test()
         request = self.dummy_data.request_args_get()

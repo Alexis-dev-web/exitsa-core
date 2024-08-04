@@ -23,7 +23,7 @@ class CreateUserUseCase(UseCase):
         if not request.group:
             request.group = self.group_repository.get_by_name('CLIENT')
 
-        # user.groups.set([request.group])
+        user.groups.set([request.group])
         #TODO: SEND email new account and set new permissions 
 
         return user
