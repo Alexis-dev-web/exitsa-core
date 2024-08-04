@@ -47,6 +47,20 @@ User default:
         $ python manage.py makemigrations --empty <yourappname>
     ```
 
+### Create fake data
+
+1. Create fake users
+
+    ```
+        $ python manage.py create_fake_users
+    ```
+
+2. Create fake products
+
+    ```
+        $ python manage.py create_fake_products
+    ```
+
 ## Documentation
 
   The structor off project each module or app is a package to return especific endpoints and each contain:
