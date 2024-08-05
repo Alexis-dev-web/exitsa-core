@@ -2,6 +2,7 @@ from dataclasses import dataclass
 
 from utils.base_dto import BaseDto
 from product.models import Product
+from .alert_product_dto import AlertProductDTO
 
 
 @dataclass
@@ -18,4 +19,8 @@ class CreateOrUpdateDTO(BaseDto):
     image_preview: str = None
     product_id: str = None
     product: Product = None
+    alert: AlertProductDTO = None
 
+    def __post_init__(self):
+        if self.alert:
+            self.alert = AlertProductDTO.from_json(self.alert)

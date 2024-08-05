@@ -1,1 +1,2 @@
 from .product_response import ProductResponse
+from .alert_product_response import AlertProductResponse

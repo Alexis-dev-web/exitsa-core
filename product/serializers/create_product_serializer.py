@@ -3,6 +3,7 @@ from rest_framework import serializers
 from utils.error_messages import messages
 from store.models import Store
 from product.models import Product, ProductRepository
+from .add_alert_product_serializer import AddAlertProductSerializer
 
 
 class CreateProductSerializer(serializers.Serializer):
@@ -15,6 +16,7 @@ class CreateProductSerializer(serializers.Serializer):
     base_pricing = serializers.FloatField()
     base_cost = serializers.FloatField(required=False)
     in_existence = serializers.IntegerField()
+    alert = AddAlertProductSerializer(required=False)
 
     def __init__(self, instance=None, data=..., **kwargs):
         super().__init__(instance, data, **kwargs)

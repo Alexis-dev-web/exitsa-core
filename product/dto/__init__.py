@@ -1,2 +1,3 @@
 from .create_or_update_product_dto import CreateOrUpdateDTO
 from .get_products_dto import GetProductsDTO
+from .alert_product_dto import AlertProductDTO

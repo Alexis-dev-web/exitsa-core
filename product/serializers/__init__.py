@@ -2,3 +2,5 @@ from .create_product_serializer import CreateProductSerializer
 from .get_product_serializer import GetProductSerializer
 from .get_products_serializer import GetProductsSerializer
 from .update_product_serializer import UpdateProductSerializer
+from .add_alert_product_serializer import AddAlertProductSerializer
+from .create_alert_serializer import CreateAlertProductSerializer
