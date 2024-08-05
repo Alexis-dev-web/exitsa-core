@@ -3,6 +3,6 @@ from abc import ABC, abstractmethod
 
 class UseCase(ABC):
     @abstractmethod
-    def execute(self):
+    def execute(self, request, *args):
         pass
 

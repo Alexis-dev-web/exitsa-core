@@ -1,4 +1,4 @@
-from product.models import Product
+from product.models import Product, AlertProduct
 
 
 class ProductResponse:
@@ -20,3 +20,8 @@ class ProductResponse:
             'updated_at': str(product.created_at)
         }
 
+    def with_alert(self, product: Product, alert: dict = {}) -> dict:
+        response = self.to_json(product)
+        response['alert'] = alert
+
+        return response
